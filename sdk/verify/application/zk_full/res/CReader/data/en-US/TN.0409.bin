@@ -1,0 +1,396 @@
+TN = {
+-- +/-
+--{"((+-)([ ]*))[%d]+", " positive negative "},
+--{"((+-)([ ]*))[%d]+", " positive negative "},
+-- Date
+-- format : [year][/][month][/][day]
+{"(%d%d%d%d)/([01]?[1-9])/([0123]?[1-9])",        "%xmonth:2 %xord:3 %xpairnum:1"},
+-- format : [month][/][day][/][year]
+{"([012]?[1-9])/([0123]?[1-9])/(%d%d%d%d)",       "%xmonth:1 %xord:2 %xpairnum:3"},
+--[day][/][month][/][year]
+{"([0123]?[1-9])/([012]?[1-9])/(%d%d%d%d)",       "%xmonth:2 %xord:1 %xpairnum:3"},
+--format : [month][/][day]
+{"([012]?[1-9])/([0-3]?[1-9])",                   "%xmonth:1 %xord:2"},
+
+--== Time ==
+--format: [0-23][:][0-59][:][0-59]
+{"(2[0-3])[:]([0-5]?%d)[:]([0-5]?%d)",             "%xn:1 hour %xn:2 minute %xn:3 second"},
+--format: [0-23][:][0-59]
+{"([01]?%d):(00)%s[p|P][%.]?[m|M][%.]?",          "%xn:1 p.m."},
+{"([01]?%d):(00)%s[a|A][%.]?[m|M][%.]?",          "%xn:1 EI M"},
+{"([01]?%d):0?(%d)%s[p|P][%.]?[m|M][%.]?",  "%xn:1 O %xn:2 p.m."},
+{"([01]?%d):0?(%d)%s[a|A][%.]?[m|M][%.]?",  "%xn:1 O %xn:2 EI M"},
+{"([01]?%d):([0-5]?%d)%s[p|P][%.]?[m|M][%.]?",  "%xn:1 %xn:2 p.m."},
+{"([01]?%d):([0-5]?%d)%s[a|A][%.]?[m|M][%.]?",  "%xn:1 %xn:2 EI M"},
+{"(2[0-3]):(00)",                                 "%xn:1 o'clock"},
+{"([01]?%d):(00)",                                "%xn:1 o'clock"},
+{"(2[0-3]):([0]?%d)([^%d])",                      "%xn:1 O %xn:2 %3"},
+{"([01]?%d):([0]?%d)([^%d])",                     "%xn:1 O %xn:2 %3"},
+{"(2[0-3]):([0-5]?%d)",                           "%xn:1 %xn:2"},
+{"([01]?%d):([0-5]?%d)",                          "%xn:1 %xn:2"},
+
+--== Telephone number ==
+{"([%d][%d][%d][%d]+)[-]([%d][%d][%d][%d]+)",     "%xnd:1 %xnd:2"},
+{"(0[%d])[-]([%d][%d][%d][%d]+)",                 "%xnd:1 %xnd:2"},
+
+-- Currency
+{"([^%d])(1)%$",                                  "%xn:1 dollar"},
+{"%$(1)%.(%d+)m[^%w]",                            "%xn:1 point %xnd:2 million dollars"},
+{"%$(1)%.(%d+)",                                  "%xn:1 point %xnd:2 dollars"},
+{"%$(1)m[^%w]",                                   "%xn:1 million dollars"},
+{"%$(1)([^%d*])",                                 "%xn:1 dollar"},
+{"([%d,]+)%$",                                    "%xn:1 dollars"},
+{"%$(%d+)%.(%d+)m[^%w]",                          "%xn:1 point %xnd:2 million dollars"},
+{"%$(%d+)%.(%d+)",                                "%xn:1 point %xnd:2 dollars"},
+{"%$(%d+)m[^%w]",                                 "%xn:1 million dollars"},
+{"%$([%d,]+)",                                    "%xn:1 dollars"},
+
+{"%¥(%d+)%.(%d+)",                                "%xn:1 point %xnd:2 yen"},
+{"([%d,]+)%¥",                                    "%xn:1 yen"},
+{"%¥([%d,]+)",                                    "%xn:1 yen"},
+
+{"%€(%d+)%.(%d+)m[^%w]",                          "%xn:1 point %xnd:2 million euro"},
+{"%€(%d+)%.(%d+)",                                "%xn:1 point %xnd:2 euro"},
+{"([%d,]+)%€",                                    "%xn:1 euro"},
+{"%€(%d+)m[^%w]",                                 "%xn:1 million euro"},
+{"%€([%d,]+)",                                    "%xn:1 euro"},
+
+{"([^%d])(1)%£",                                  "%xn:1 pound"},
+{"%£(1)%.(%d+)m[^%w]",                            "%xn:1 point %xnd:2 million pounds"},
+{"%£(1)%.(%d+)",                                  "%xn:1 point %xnd:2 pounds"},
+{"%£(1)m[^%w]",                                   "%xn:1 million pounds"},
+{"%£(1)([^%d*])",                                 "%xn:1 pound"},
+{"([%d,]+)%£",                                    "%xn:1 pounds"},
+{"%£(%d+)%.(%d+)m[^%w]",                          "%xn:1 point %xnd:2 million pounds"},
+{"%£(%d+)%.(%d+)",                                "%xn:1 point %xnd:2 pounds"},
+{"%£(%d+)m[^%w]",                                 "%xn:1 million pounds"},
+{"%£([%d,]+)",                                    "%xn:1 pounds"},
+--{"($[ ]*([01])%.([%d]+)[ ]*(million|billion)*)", "%xn:1 point %xnd:2 %3 dollar"},
+--{"[$][ ]*([%d,]+)%.([%d]+)[ ]*([mb]illion)", "%xn:1 ponit %xnd:2 %3 dollars"},
+--{"(([01])%.([%d]+)[ ]*$)", "%xn:1 point %xnd:2 dollar"},
+--{"([%d,]+)%.([%d]+)[ ]*[$]]", "%xn:1 point %xnd:2 dollars"},
+--{"(\$[ ]*([01]))", "%xn:1 dollar"},
+--{"[$][ ]*([%d]+)[ ]*([b]illion)", "%xn:1 %2 dollars"},
+--{"(([01])[ ]*$)", "%xn:1 dollar"},
+--{"([%d]+)[ ]*[$]", "%xn:1 dollars"},
+--{"[$][ ]*([%d]+)", "%xn:1 dollars"},
+--{"¥[ ]*([%d,]+)%.([d]+)[ ]*[million|billion]*", "%xn:1 ponit %xnd:2 %3 yen"},
+--{"([%d,]+)%.([%d]+)[ ]*¥", "%xn:1 point %xnd:2 yen"},
+--{"([%d,]+)[ ]*¥", "%xn:1 yen"},
+--{"¥[ ]*([%d,]+)[ ]*[million|billion]*", "%xn:1 %2 yen"},
+--{"£[ ]*([%d,]+)%.(%d+)[ ]*[million|billion]*", "%xn:1 ponit %xnd:2 %3 pounds"},
+--{"([%d,]+)%.([d]+)[ ]*£", "%xn:1 point %xnd:2 pounds"},
+--{"(([01])[ ]*£)", "%xn:1 pound"},
+--{"(£[ ]*([01])[ ]*(million|billion)*)", "%xn:1 %2 pound"},
+--{"([%d,]+)[ ]*£", "%xn:1 pounds"},
+--{"£[ ]*([%d,]+)[ ]*[million|billion]*", "%xn:1 %2 pounds"},
+--{"€[ ]*(%d,+)%.(%d+)[ ]*[million|billion]*", "%xn:1 ponit %xnd:2 %3 euro"},
+--{"([%d,]+)%.([%d]+)[ ]*€", "%xn:1 point %xnd:2 euro"},
+--{"€[ ]*([%d,]+)[ ]*[million|billion]*", "%xn:1 %2 euro"},
+--{"([%d,]+)[ ]*€", "%xn:1 euro"},
+
+--== Percentage ==
+--format: [number][-][number][%]
+--xxx%-xxx%
+{"(%d+)[%.](%d+)[ ]*[%%％][ ]*[-~－～][ ]*(%d+)[%.](%d+)[ ]*[%%％]", "(#1-1) %xn:1 point %xnd:2 percent to %xn:3 point %xnd:4 percent"},
+{"(%d+)[%.](%d+)[ ]*[%%％][ ]*[-~－～][ ]*(%d+)[ ]*[%%％]", "(#1-1) %xn:1 point %xnd:2 percent to %xn:3 percent"},
+{"(%d+)[ ]*[%%％][ ]*[-~－～][ ]*(%d+)[%.](%d+)[ ]*[%%％]", "(#1-1) %xn:1 percent to %xn:2 point %xnd:3 percent"},
+{"(%d+)[ ]*[%%％][ ]*[-~－～][ ]*(%d+)[ ]*[%%％]", "(#1-2) %xn:1 percent to %xn:2 percent"},
+--xxx-xxx%
+{"(%d+)[%.](%d+)[ ]*[%-~－～][ ]*(%d+)[%.](%d+)[ ]*[%%％]",  "(#1-3) %xn:1 point %xnd:2 percent to %xn:3 point %xnd:4 percent"},
+{"(%d+)[%.](%d+)[ ]*[-~－～][ ]*(%d+)[ ]*[%%％]", "(#1-1) %xn:1 point %xnd:2 percent to %xn:3 percent"},
+{"(%d+)[ ]*[-~－～][ ]*(%d+)[%.](%d+)[ ]*[%%％]", "(#1-1) %xn:1 percent to %xn:2 point %xnd:3 percent"},
+{"(%d+)[ ]*[-~－～][ ]*(%d+)[ ]*[%%％]",        "(#1-4) %xn:1 percent to %xn:2 percent"},
+--format: [number][.][number][%]
+{"(%d+)[%.](%d+)[ ]*[%%％]",                    "(#1-5) %xn:1 point %xnd:2 percent"},
+--format: [number][%]
+{"(%d+)[ ]*[%%％]",                             "(#1-6) %xn:1 percent"},
+
+--== Fraction ==
+--format: [number][/][number]
+--{"(%d+)%/(%d+)", "%xn:1 over %xn:2"},
+
+--== Temperature ==
+{"(%d+)[%.](%d+)[ ]*℃[ ]*[-~－～][ ]*(%d+)[%.](%d+)[ ]*℃",  "%xn:1 point %xnd:2 degrees Celsius to %xn:3 point %xnd:4 degrees Celsius"},
+{"(%d+)[%.](%d+)[ ]*°C[ ]*[-~－～][ ]*(%d+)[%.](%d+)[ ]*°C",  "%xn:1 point %xnd:2 degrees Celsius to %xn:3 point %xnd:4 degrees Celsius"},
+{"(%d+)[ ]*℃[ ]*[-~－～][ ]*(%d+)[ ]*℃",  "%xn:1 degrees Celsius to %xn:2 degrees Celsius"},
+{"(%d+)[ ]*°C[ ]*[-~－～][ ]*(%d+)[ ]*°C",  "%xn:1 degrees Celsius to %xn:2 degrees Celsius"},
+---{"(%d+)[ ]*[℉°F]*[-~－～][ ]*(%d+)[ ]*[℉°]F",
+{"(%d+)[%.](%d+)[ ]*[-~－～][ ]*(%d+)[%.](%d+)[ ]*℃",         "%xn:1 point %xnd:2 to %xn:3 degrees Celsius"},
+{"(%d+)[%.](%d+)[ ]*[-~－～][ ]*(%d+)[%.](%d+)[ ]*°C",         "%xn:1 point %xnd:2 to %xn:3 degrees Celsius"},
+{"(%d+)[ ]*[-~－～][ ]*(%d+)[ ]*℃",         "%xn:1 to %xn:2 degrees Celsius"},
+{"(%d+)[ ]*[-~－～][ ]*(%d+)[ ]*°C",         "%xn:1 to %xn:2 degrees Celsius"},
+
+{"-(%d+)[%.](%d+)[ ]*℃",                   "negative %xn:1 point %xnd:2 degrees Celsius"},
+{"-(%d+)[%.](%d+)[ ]*°C",                   "negative %xn:1 point %xnd:2 degrees Celsius"},
+{"(%d+)[%.](%d+)[ ]*℃",                    "%xn:1 point %xnd:2 degrees Celsius"},
+{"(%d+)[%.](%d+)[ ]*°C",                    "%xn:1 point %xnd:2 degrees Celsius"},
+{"-(%d+)[ ]*℃",                            "negative %xn:1 degrees Celsius"},
+{"-(%d+)[ ]*°C",                            "negative %xn:1 degrees Celsius"},
+{"+(%d+)[ ]*℃",                            "positive %xn:1 degrees Celsius"},
+{"+(%d+)[ ]*°C",                            "positive %xn:1 degrees Celsius"},
+{"(%d+)[ ]*℃",                             "%xn:1 degrees Celsius"},
+{"(%d+)[ ]*°C",                             "%xn:1 degrees Celsius"},
+
+{"(%d+)[%.](%d+)[ ]*℉[ ]*[-~－～][ ]*(%d+)[%.](%d+)[ ]*℉",   "%xn:1 point %xnd:2 degrees Fahrenheit to %xn:3 point %xnd:4 degrees Fahrenheit"},
+{"(%d+)[%.](%d+)[ ]*°F[ ]*[-~－～][ ]*(%d+)[%.](%d+)[ ]*°F",   "%xn:1 point %xnd:2 degrees Fahrenheit to %xn:3 point %xnd:4 degrees Fahrenheit"},
+{"(%d+)[ ]*℉[ ]*[-~－～][ ]*(%d+)[ ]*℉",   "%xn:1 degrees Fahrenheit to %xn:2 degrees Fahrenheit"},
+{"(%d+)[ ]*°F[ ]*[-~－～][ ]*(%d+)[ ]*°F",   "%xn:1 degrees Fahrenheit to %xn:2 degrees Fahrenheit"},
+{"(%d+)[%.](%d+)[ ]*[-~－～][ ]*(%d+)[%.](%d+)[ ]*℉",         "%xn:1 point %xnd:2 to %xn:3 point %xnd:4 degrees Fahrenheit"},
+{"(%d+)[%.](%d+)[ ]*[-~－～][ ]*(%d+)[%.](%d+)[ ]*°F",         "%xn:1 point %xnd:2 to %xn:3 point %xnd:4 degrees Fahrenheit"},
+{"(%d+)[ ]*[-~－～][ ]*(%d+)[ ]*℉",         "%xn:1 to %xn:2 degrees Fahrenheit"},
+{"(%d+)[ ]*[-~－～][ ]*(%d+)[ ]*°F",         "%xn:1 to %xn:2 degrees Fahrenheit"},
+
+{"-(%d+)[%.](%d+)[ ]*℉",                   "negative %xn:1 point %xnd:2 degrees Fahrenheit"},
+{"-(%d+)[%.](%d+)[ ]*°F",                   "negative %xn:1 point %xnd:2 degrees Fahrenheit"},
+{"(%d+)[%.](%d+)[ ]*℉",                    "%xn:1 point %xnd:2 degrees Fahrenheit"},
+{"(%d+)[%.](%d+)[ ]*°F",                    "%xn:1 point %xnd:2 degrees Fahrenheit"},
+{"-(%d+)[ ]*℉",                            "negative %xn:1 degrees Fahrenheit"},
+{"-(%d+)[ ]*°F",                            "negative %xn:1 degrees Fahrenheit"},
+{"+(%d+)[ ]*℉",                            "positive %xn:1 degrees Fahrenheit"},
+{"+(%d+)[ ]*°F",                            "positive %xn:1 degrees Fahrenheit"},
+{"(%d+)[ ]*℉",                             "%xn:1 degrees Fahrenheit"},
+{"(%d+)[ ]*°F",                             "%xn:1 degrees Fahrenheit"},
+
+--== Score ==
+{"(%d+)[ ]*[:-~][ ]*(%d+)", "%xn:1 to %xn:2"},
+
+--== Month ==
+{"(Jan)[ .]", "January"},
+{"(JAN)[ .]", "January"},
+{"(Feb)[ .]", "February"},
+{"(FEB)[ .]", "February"},
+{"(Mar)[ .]", "March"},
+{"(MAR)[ .]", "March"},
+{"(Apr)[ .]", "April"},
+{"(APR)[ .]", "April"},
+{"(May)[ .]", "May"},
+{"(MAY)[ .]", "May"},
+{"(Jun)[ .]", "June"},
+{"(JUN)[ .]", "June"},
+{"(Jul)[ .]", "July"},
+{"(JUL)[ .]", "July"},
+{"(Aug)[ .]", "August"},
+{"(AUG)[ .]", "August"},
+{"(Sep)[ .]", "September"},
+{"(SEP)[ .]", "September"},
+{"(Oct)[ .]", "October"},
+{"(OCT)[ .]", "October"},
+{"(Nov)[ .]", "November"},
+{"(NOV)[ .]", "November"},
+{"(Dec)[ .]", "December"},
+{"(DEC)[ .]", "December"},
+
+--== Years ==
+{"([1]%d)(00)[sS]",            "%xpairnum:1 hundreds"},
+{"([1]%d%d%d)[sS]",            "%xpairnum:1s"},
+{"in%s([1]%d00)",              "in %xpairnum:1 hundred"},
+{"in%s([1]%d)(0%d)",           "in %xpairnum:1 o %xn:2"},
+{"in%s([1]%d%d%d)",            "in %xpairnum:1"},
+{"in%s([2]%d00)",              "in %xn:1"},
+{"in%s([2]%d%d%d)",            "in %xn:1"},
+{"[sS]ince%s(2%d%d%d)",      "since %xn:1"},
+{"[sS]ince%s(1%d%d%d)",      "since %xpairnum:1"},
+{"[fF]rom%s(2%d%d%d)%sto%s(2%d%d%d)",     "from %xn:1 to %xn:2"},
+{"[fF]rom%s(1%d)0(%d)%sto%s(2%d%d%d)",     "from %xn:1 o %xn:2 to %xn:3"},
+{"[fF]rom%s(1%d)0(%d)%sto%s(1%d)0(%d)",     "from %xn:1 o %xn:2 to %xn:3 o %xn:4"},
+{"[fF]rom%s(1%d)0(%d)%sto%s(1%d%d%d)",     "from %xn:1 o %xn:2 to %xn:3"},
+{"[fF]rom%s([1]%d%d%d)%sto%s([2]%d%d%d)",     "from %xpairnum:1 to %xn:2"},
+{"[fF]rom%s([1]%d%d%d)%sto%s([1]%d%d%d)",     "from %xpairnum:1 to %xpairnum:2"},
+{"[fF]rom%s([2]%d%d%d)",       "from %xn:1"},
+{"[fF]rom%s([1]%d%d%d)",       "from %xpairnum:1"},
+
+-- a + b
+{"(%d+)[%s]*[%+][%s]*(%d+)",   "%xn:1 plus %xn:2 "},
+-- +a.b
+{"[%+][%s]*(%d+)[%.](%d+)",    "positive %xn:1 point %xnd:2 "},
+-- +a
+{"[%+][%s]*(%d+)",             "positive %xn:1 "},
+-- a - b
+{"(%d+)[%s]*[-][%s]*(%d+)",    "%xn:1 minus %xn:2 "},
+-- -a.b
+{"[-][$s]*(%d+)[$.](%d+)",     "negative %xn:1 point %xnd:2 "},
+-- -a
+{"[-][%s]*(%d+)",              "negative %xn:1 "},
+
+-- 數字+量詞
+{"(%d+)[ ]*(dollar[s]?)",      "%xn:1 %2"},
+{"(%d+)[ ]*(cent[s]?)",        "%xn:1 %2"},
+{"(%d+)[ ]*(pound[s]?)",       "%xn:1 %2"},
+{"(%d+)[ ]*(penny)",           "%xn:1 %2"},
+{"(%d+)[ ]*(pennies)",         "%xn:1 %2"},
+{"(%d+)[ ]*(mark[s]?)",        "%xn:1 %2"},
+{"(%d+)[ ]*(year[s]?)",        "%xn:1 %2"},
+{"(%d+)[ ]*(month[s]?)",       "%xn:1 %2"},
+{"(%d+)[ ]*(day[s]?)",         "%xn:1 %2"},
+{"(%d+)[ ]*(hour[s]?)",        "%xn:1 %2"},
+{"(%d+)[ ]*(minute[s]?)",      "%xn:1 %2"},
+{"(%d+)[ ]*(second[s]?)",      "%xn:1 %2"},
+--{"((%d+)[ ]*[eur|euro|yen|ms|sec|min|hr|feet|miles|meters|kilometers])", "%xn:1 %2"},
+
+-- fang-sheng add
+{"(U%.S%.A%.)",                "U S A"},
+{"(U%.S%.)",                   "U S"},
+{"(A%.C%.)",                   "EI C"},
+{"([%w])%.([%w])%.([%w])%.",   "%1 %2 %3"},
+{"([%w])%.([%w])%.([%w])",     "%1 %2 %3"},
+{"([%w])%.([%w])%.",           "%1 %2"},
+
+-- Email位址的處理
+{"([%a]+)([%d]+)(@)([%a]+)([%d]+)(%.com)", "(#2-1)%1 %xnd:2 at %4 %xnd:5 dot com"},
+{"([%a]+)([%d]+)(@)([%d]+)([%a]+)(%.com)", "(#2-2)%1 %xnd:2 at %xnd:4 %5 dot com"},
+{"([%d]+)([%a]+)(@)([%a]+)([%d]+)(%.com)", "(#2-3)%xnd:1 %2 at %4 %xnd:5 dot com"},
+{"([%d]+)([%a]+)(@)([%d]+)([%a]+)(%.com)", "(#2-4)%xnd:1 %2 at %xnd:4 %5 dot com"},
+{"([%a]+)([%d]+)(@)(gmail)(%.com)",        "(#2-5)%1 %xnd:2 at G mail dot com"},
+{"([%d]+)([%a]+)(@)(gmail)(%.com)",        "(#2-6)%xnd:1 %2 at G mail dot com"},
+
+{"([%a]+)([%d]+)(@)([%a]+)(%.com)(%.tw)",  "(#2-7)%1 %xnd:2 at %4 dot com dot T W"},
+{"([%a]+)([%d]+)(@)([%d]+)(%.com)(%.tw)",  "(#2-8)%1 %xnd:2 at %xnd:4 dot com dot T W"},
+{"([%d]+)([%a]+)(@)([%a]+)(%.com)(%.tw)",  "(#2-9)%xnd:1 %2 at %4 dot com dot T W"},
+{"([%d]+)([%a]+)(@)([%d]+)(%.com)(%.tw)",  "(#2-10)%xnd:1 %2 at %xnd:4 dot com dot T W"},
+{"([%a]+)(@)([%w]+)(%.com)(%.tw)",         "(#2-191)%1 at %3 dot com dot T W"},
+{"([%d]+)(@)([%w]+)(%.com)(%.tw)",         "(#2-20)%xnd:1 at %3 dot com dot T W"},
+
+{"([%a]+)([%d]+)(@)([%a]+)(%.com)",        "(#2-11)%1 %xnd:2 at %4 dot com"},
+{"([%a]+)([%d]+)(@)([%d]+)(%.com)",        "(#2-12)%1 %xnd:2 at %xnd:4 dot com"},
+{"([%d]+)([%a]+)(@)([%a]+)(%.com)",        "(#2-13)%xnd:1 %2 at %4 dot com"},
+{"([%d]+)([%a]+)(@)([%d]+)(%.com)",        "(#2-14)%xnd:1 %2 at %xnd:4 dot com"},
+
+{"([%a]+)([%d]+)(@)([%w]+)(%.com)",        "(#2-15)%1 %xnd:2 at %4 dot com"},
+{"([%d]+)([%a]+)(@)([%w]+)(%.com)",        "(#2-16)%xnd:1 %2 at %xnd:4 dot com"},
+{"([%a]+)(@)(gmail)(%.com)",               "(#2-17)%1 at G mail dot com"},
+{"([%d]+)(@)(gmail)(%.com)",               "(#2-18)%xnd:1 at G mail dot com"},
+{"([%a]+)(@)([%w]+)(%.com)",               "(#2-19)%1 at %3 dot com"},
+{"([%d]+)(@)([%w]+)(%.com)",               "(#2-20)%xnd:1 at %3 dot com"},
+
+{"([%a]+)(%.com)",  "(#3)%1 dot com"},
+{"([%d]+)(%.com)",  "(#3)%xnd:1 dot com"},
+
+-- IP或網址的處理 ([number].[number必須先放在前面])
+-- IP
+{"(%d+)%.(%d+)%.(%d+)%.(%d+)", "%xnd:1 dot %xnd:2 dot %xnd:3 dot %xnd:4"},
+-- 網址[xxx] + (.[xxx]), 其中.[xxx]重複多次
+{"(www%.)", "Triple W dot"},
+{"([a-zA-Z]+)%.([a-zA-Z]+)%.([a-zA-Z]+)%.([a-zA-Z]+)", "(#123)%1 dot %2 dot %3 dot %4"},
+{"([a-zA-Z]+)%.([a-zA-Z]+)%.([a-zA-Z]+)",              "(#124)%1 dot %2 dot %3"},
+
+
+
+-- 處理有","的數字
+{"(([%d]+)[,]([%d][%d][%d])[,]([%d][%d][%d])[,]([%d][%d][%d])[,]([%d][%d][%d]))", "%xn:1"},
+{"(([%d]+)[,]([%d][%d][%d])[,]([%d][%d][%d])[,]([%d][%d][%d]))", "%xn:1"},
+{"(([%d]+)[,]([%d][%d][%d])[,]([%d][%d][%d]))", "%xn:1"},
+{"(([%d]+)[,]([%d][%d][%d]))", "%xn:1"},
+
+
+-- "純數字"的處理
+-- format: [number][.][number]
+{"(%d+)%.(%d+)",               "%xn:1 point %xnd:2 "},
+-- format: [number]
+{"(%d+)(th)",                  "%xord:1"},
+{"(%d+)(rd)",                  "%xord:1"},
+{"(%d+)(nd)",                  "%xord:1"},
+{"(%d+)(st)",                  "%xord:1"},
+{"(%d%d%d%d%d)",               "%xn:1"},
+{"(%d%d%d%d)",                 "%xn:1"},
+{"(%d%d%d)",                   "%xn:1"},
+{"(%d%d)",                     "%xn:1"},
+{"(%d+)",                      "%xnd:1"},
+--{"(%d{5,})",                    "%xnd:1"},
+--{"(%d{2,4})",                   "%xn:1"},
+
+
+-- 單純字串替換
+{"(BOC)",                      "B O C"},
+{"(ETNEWS)",                   "E T NEWS"},
+{"(ETTODAY)",                  "E T TODAY"},
+{"(ETnews)",                   "E T NEWS"},
+{"(ETToday)",                  "E T TODAY"},
+{"(ETNews)",                   "E T NEWS"},
+{"(ETtoday)",                  "E T TODAY"},
+{"(NOWnews)",                  "Now news"},
+{"(Lamigo)",                   "La me go"},
+{"[^A-Z](SOP)[^A-Z]",          "S O P"},
+{"[^A-Z](CSIS)[^A-Z]",         "C S I S"},
+{"[^A-Z](DRAM)[^A-Z]",         "D Ram"},
+{"[^A-Z](ATP)[^A-Z]",          "ei T P"},
+{"[^A-Z](LPGA)[^A-Z]",         "L P G ei"},
+{"[^A-Z](WTA)[^A-Z]",          "W T ei"},
+{"[^A-Z](ASC)[^A-Z]",          "ei S C"},
+{"[^A-Z](ITTF)[^A-Z]",         "I T T F"},
+{"[^A-Z](ESPN)[^A-Z]",         "E S P N"},
+{"[^A-Z](CPI)[^A-Z]",          "C P I"},
+{"[^A-Z](LTE)[^A-Z]",          "L T E"},
+{"[^A-Z](MIC)[^A-Z]",          "M I C"},
+{"[^A-Z](PMI)[^A-Z]",          "P M I"},
+{"[^A-Z](IBM)[^A-Z]",          "I B M"},
+{"[^A-Z](LED)[^A-Z]",          "L E D"},
+{"[^A-Z](ECB)[^A-Z]",          "E C B"},
+{"[^A-Z](IKO)[^A-Z]",          "I K O"},
+{"[^A-Z](QE)[^A-Z]",           "Q E"},
+{"([iI]OS)[^A-Z]",             "i O S"},
+{"[^A-Z](IFRS)[^A-Z]",         "I F R S"},
+{"[^A-Z](KDDI)[^A-Z]",         "K D D I"},
+{"[^A-Z](TSI)[^A-Z]",          "T S I"},
+{"[^A-Z](SU)[^A-Z]",           "S U"},
+{"[^A-Z](UFG)[^A-Z]",          "U F G"},
+{"(Ulchi)",                    "Oltchi"},
+{"[^A-Z](AC&U)[^A-Z]",         "ei C and U"},
+{"(M.Phil.)",                  "M Phil "},
+{"(N.A.M.)",                   "N ei M "},
+{"[^A-Z](SA)[^A-Z]",           "S ei"},
+{"([Ss]b)",                    "somebody "},
+{"([Ss]th)",                   "something "},
+{"[^A-Z](ABH)[^A-Z]",          "ei B H"},
+{"[^A-Z](ABM)[^A-Z]",          "ei B M"},
+{"[^A-Z](Abp)",                "ei b p"},
+{"[^A-Z](ABV)[^A-Z]",          "ei B V"},
+{"[^A-Z](AAI)[^A-Z]",          "ei ei I"},
+{"(I[ ]+AM)",                  "I am"},
+{"[^A-Z](AM)[^A-Z]",           "ei M"},
+{"(Hongqiao)",                 "Hoang chao"},
+{"(Minhang)",                  "Min hung"},
+{"(Zhongshan)",                "Zong saan"},
+{"(superstar)",                "super star"},
+{"[^A-Z](AKB)[^A-Z]",          "ei K B "},
+{"[^A-Z](NPDA)[^A-Z]",         "N P D ei"},
+{"[^A-Z](ASX)[^A-Z]",          "ei S X"},
+{"[^A-Z](OMFG)[^A-Z]",         "O M F G"},
+{"([Kk]inda)",                 "Kind a"},
+{"[^A-Z](PAC)[^A-Z]",                      "P ei C"},
+{"[^a-zA-Z]([Aa]pp)[^a-zA-Z]", "ap"},
+{"([Oo]taku)",                 "o ta ku"},
+{"[^A-Z](CBOT)[^A-Z]",         "C B O T"},
+{"(Pyongyang)",                "Pyong yang"},
+{"[^A-Z](AP)[^A-Z]",           "ei P"},
+--{"(’)",                        "'"},
+{"[ ]([-]{1,})[ ]",            ","},
+
+{"(Jr%.)",   "Junior"},
+{"(Sr%.)",   "Senior"},
+{"(sq%.)",   "square"},
+{"(ft%.)",   "feet"},
+{"(oz%.)",   "ounce"},
+{"(yd%.)",   "yard"},
+{"[^A-Z](VIP)[^A-Z]",    "V I P"},
+--{"(R&D)",  "R and D"},
+{"[^A-Z](USD)[^A-Z]",    "U S D"},
+{"[^A-Z](USA)[^A-Z]",    "U S A"},
+{"(enuff)",  "enough"},
+{"([%w]+)(&)([%w]+)", "%1 and %2"},
+{"[^A-Z](IRA)[^A-Z]",    "I R EI"},
+{"[^A-Z](AAA)[^A-Z]",    "triple EI"},
+{"[^A-Z](IEEE)[^A-Z]",   "I triple E"},
+{"[^A-Z](NCAA)[^A-Z]",   "N C double EI"},
+{"[^A-Z](IOU)[^A-Z]",    "I O U"},
+{"[^A-Z](HIV)[^A-Z]",    "H I V"},
+{"[^A-Z](AKA)[^A-Z]",    "EI K EI"},
+{"[^A-Z](IQ)[^A-Z]",     "I Q"},
+{"[^A-Z](PSI)[^A-Z]",    "P S I"},
+{"[^A-Z](SOS)[^A-Z]",    "S O S"},
+{"(&)",      "and"},
+{"°",   "degree"}
+}
+-- for i = 1, #TN do
+--     print(TN[i][1], TN[i][2])
+-- end

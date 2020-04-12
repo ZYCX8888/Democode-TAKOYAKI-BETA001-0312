@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UiSurface_LAYOUT>
+	<Main_LAYOUT>
+	  <ItemArea ItemIndex="0" X="0" Y="0" W="0" H="0">
+	  </ItemArea>
+	  <ItemArea ItemIndex="1" X="0" Y="0" W="0" H="0">
+	  </ItemArea>
+	</Main_LAYOUT>
+	<CallWindow_LAYOUT>
+	  <!--CallEdit-->
+	  <ItemArea ItemIndex="0" X="200" Y="40" W="520" H="50">
+	  </ItemArea>
+	  <!--Button 1-->
+	  <ItemArea ItemIndex="1" X="200" Y="128" W="160" H="80">
+	  </ItemArea>
+	  <!--Button 2-->
+	  <ItemArea ItemIndex="2" X="380" Y="128" W="160" H="80">
+	  </ItemArea>
+	  <!--Button 3-->
+	  <ItemArea ItemIndex="3" X="560" Y="128" W="160" H="80">
+	  </ItemArea>
+	  <!--Button 4-->
+	  <ItemArea ItemIndex="4" X="200" Y="220" W="160" H="80">
+	  </ItemArea>
+	  <!--Button 5-->
+	  <ItemArea ItemIndex="5" X="380" Y="220" W="160" H="80">
+	  </ItemArea>
+	  <!--Button 6-->
+	  <ItemArea ItemIndex="6" X="560" Y="220" W="160" H="80">
+	  </ItemArea>
+	  <!--Button 7-->
+	  <ItemArea ItemIndex="7" X="200" Y="312" W="160" H="80">
+	  </ItemArea>
+	  <!--Button 8-->
+	  <ItemArea ItemIndex="8" X="380" Y="312" W="160" H="80">
+	  </ItemArea>
+	  <!--Button 9-->
+	  <ItemArea ItemIndex="9" X="560" Y="312" W="160" H="80">
+	  </ItemArea>
+	  <!--Button ABC-->
+	  <ItemArea ItemIndex="10" X="200" Y="404" W="160" H="80">
+	  </ItemArea>
+	  <!--Button 0-->
+	  <ItemArea ItemIndex="11" X="380" Y="404" W="160" H="80">
+	  </ItemArea>
+	  <!--Button X-->
+	  <ItemArea ItemIndex="12" X="560" Y="404" W="160" H="80">
+	  </ItemArea>
+	  <!--Button Monitor-->
+	  <ItemArea ItemIndex="13" X="820" Y="200" W="160" H="80">
+	  </ItemArea>
+	  <!--Button Calling-->
+	  <ItemArea ItemIndex="14" X="820" Y="292" W="160" H="80">
+	  </ItemArea>
+	  <!--Button Return-->
+	  <ItemArea ItemIndex="15" X="904" Y="540" W="120" H="60">
+	  </ItemArea>
+	</CallWindow_LAYOUT>
+	<MonitorWindow_LAYOUT>
+	  <!--Button Return-->
+	  <ItemArea ItemIndex="0" X="904" Y="540" W="120" H="60">
+	  </ItemArea>
+	  <!--Video Area-->
+	  <ItemArea ItemIndex="1" X="100" Y="60" W="704" H="480">
+	  </ItemArea>
+	</MonitorWindow_LAYOUT>
+	<LocalVideoWindow_LAYOUT>
+	  <!--Button Return-->
+	  <ItemArea ItemIndex="0" X="904" Y="540" W="120" H="60">
+	  </ItemArea>
+	  <!--Button Snap-->
+	  <ItemArea ItemIndex="1" X="880" Y="100" W="120" H="60">
+	  </ItemArea>
+	  <!--Video Area-->
+	  <ItemArea ItemIndex="2" X="100" Y="60" W="704" H="480">
+	  </ItemArea>
+	</LocalVideoWindow_LAYOUT>
+	<FaceDispWindow_LAYOUT>
+	  <!--FaceDisp-->
+	  <ItemArea ItemIndex="0" X="280" Y="70" W="264" H="240">
+	  </ItemArea>
+	  <!--Button Ok-->
+	  <ItemArea ItemIndex="1" X="304" Y="352" W="80" H="40">
+	  </ItemArea>
+	  <!--Button Cancel-->
+	  <ItemArea ItemIndex="2" X="448" Y="352" W="80" H="40">
+	  </ItemArea>
+	  <!--Text Area-->
+	  <ItemArea ItemIndex="3" X="400" Y="40" W="80" H="40">
+	  </ItemArea>
+	</FaceDispWindow_LAYOUT>
+	<CalledWindow_LAYOUT>
+	  <!--Return-->
+	  <ItemArea ItemIndex="0" X="904" Y="540" W="120" H="60">
+	  </ItemArea>
+	  <!--Button HoldOn-->
+	  <ItemArea ItemIndex="1" X="850" Y="80" W="120" H="60">
+	  </ItemArea>
+	  <!--Button HangUp-->
+	  <ItemArea ItemIndex="2" X="850" Y="160" W="120" H="60">
+	  </ItemArea>
+	  <!--Video Area-->
+	  <ItemArea ItemIndex="3" X="100" Y="60" W="704" H="480">
+	  </ItemArea>
+	</CalledWindow_LAYOUT>
+	<SmartMicWindow_LAYOUT>
+	  <!--Return-->
+	  <ItemArea ItemIndex="0" X="904" Y="540" W="120" H="60">
+	  </ItemArea>
+	  <!--Trained words-->
+	  <ItemArea ItemIndex="1" X="800" Y="100" W="120" H="60">
+	  </ItemArea>
+	  <!--Start Detect words-->
+	  <ItemArea ItemIndex="2" X="800" Y="180" W="120" H="60">
+	  </ItemArea>
+	  <!--Stop Detect words-->
+	  <ItemArea ItemIndex="3" X="800" Y="260" W="120" H="60">
+	  </ItemArea>
+	  <!--text1-->
+	  <ItemArea ItemIndex="4" X="200" Y="40" W="0" H="0">
+	  </ItemArea>
+	  <!--text2-->
+	  <ItemArea ItemIndex="5" X="200" Y="70" W="0" H="0">
+	  </ItemArea>
+	  <!--smart mic edit-->
+	  <ItemArea ItemIndex="6" X="328" Y="168" W="120" H="40">
+	  </ItemArea>
+	</SmartMicWindow_LAYOUT>
+	<IconFlowWindow_LAYOUT>
+	  <!--IconFlow Area-->
+	  <ItemArea ItemIndex="0" X="0" Y="0" W="800" H="480">
+	  </ItemArea>
+	  <!--Return-->
+	  <ItemArea ItemIndex="1" X="704" Y="432" W="96" H="48">
+	  </ItemArea>
+	</IconFlowWindow_LAYOUT>
+	<TimeWindow_LAYOUT>
+	  <!--Return-->
+	  <ItemArea ItemIndex="0" X="904" Y="540" W="120" H="60">
+	  </ItemArea>
+	  <!--Start-->
+	  <ItemArea ItemIndex="1" X="280" Y="190" W="120" H="60">
+	  </ItemArea>
+	  <!--Stop-->
+	  <ItemArea ItemIndex="2" X="600" Y="190" W="120" H="60">
+	  </ItemArea>
+	  <!--CreateXML-->
+	  <ItemArea ItemIndex="3" X="280" Y="280" W="120" H="60">
+	  </ItemArea>
+	  <!--ParseXML-->
+	  <ItemArea ItemIndex="4" X="600" Y="280" W="120" H="60">
+	  </ItemArea>
+	</TimeWindow_LAYOUT>
+	<SettingWindow_LAYOUT>
+	  <!--Return-->
+	  <ItemArea ItemIndex="0" X="904" Y="540" W="120" H="60">
+	  </ItemArea>
+	  <!--Confirm-->
+	  <ItemArea ItemIndex="1" X="784" Y="540" W="120" H="60">
+	  </ItemArea>
+	  <!--PageBtnList-->
+	  <ItemArea ItemIndex="2" X="20" Y="40" W="120" H="60">
+	  </ItemArea>
+	  <!--SubPageBtnList-->
+	  <ItemArea ItemIndex="3" X="240" Y="40" W="120" H="60">
+	  </ItemArea>
+	</SettingWindow_LAYOUT>
+    <PlayToolBar_LAYOUT>
+      <!--updir-->
+      <ItemArea ItemIndex="0" X="0" Y="0" W="50" H="50">
+	  </ItemArea>
+      <!--Dir Name-->
+	  <ItemArea ItemIndex="1" X="64" Y="0" W="960" H="50">
+	  </ItemArea>
+      <!--ListView-->
+	  <ItemArea ItemIndex="2" X="0" Y="50" W="1024" H="550">
+	  </ItemArea>
+      <!--ToolBarContainer-->
+      <ItemArea ItemIndex="3" X="0" Y="520" W="1024" H="80">
+	  </ItemArea>
+      <!--TrackBar-->
+      <ItemArea ItemIndex="4" X="20" Y="520" W="984" H="30">
+	  </ItemArea>
+      <!--Play/Pause-->
+      <ItemArea ItemIndex="5" X="20" Y="550" W="50" H="50">
+	  </ItemArea>
+      <!--Stop-->
+      <ItemArea ItemIndex="6" X="75" Y="550" W="50" H="50">
+	  </ItemArea>
+      <!--PlaySlow-->
+      <ItemArea ItemIndex="7" X="130" Y="550" W="50" H="50">
+	  </ItemArea>
+      <!--PlayFast-->
+      <ItemArea ItemIndex="8" X="185" Y="550" W="50" H="50">
+	  </ItemArea>
+      <!--SpeedMode-->
+      <ItemArea ItemIndex="9" X="240" Y="550" W="80" H="50">
+	  </ItemArea>
+      <!--CurTime-->
+      <ItemArea ItemIndex="10" X="804" Y="560" W="200" H="50">
+	  </ItemArea>
+    </PlayToolBar_LAYOUT>
+</UiSurface_LAYOUT>

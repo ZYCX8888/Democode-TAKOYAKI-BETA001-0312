@@ -1,0 +1,5 @@
+MODULE_NAME := $(firstword $(patsubst %/, %, $(dir $(word $(shell echo $$(($(words $(MAKEFILE_LIST))-2))), $(MAKEFILE_LIST)))))
+CONFIG_LIST += $(MODULE_NAME)
+$(MODULE_NAME)_CFLAGS := $(CFLAGS)
+$(MODULE_NAME)_LIBS := $(LIBS)
+$(MODULE_NAME)_SRCS := $(SRCS)

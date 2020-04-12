@@ -1,0 +1,200 @@
+{
+    "chn": [
+        {
+            "id" : 0,
+            "attr":
+            {
+                "chn" : 0,
+                "w" : 1920,
+                "h" : 1088,
+                "codec" : "h264",
+                "gop" : 30,
+                "rc" : "cbr",
+                "bps" : 2000000,
+                "qp" : 50,
+                "fps" : 30,
+                "prof" : 1
+            },
+            "ins":
+            {
+                "set" : 0,
+                "data" : "12345"
+            },
+            "roi": [
+                {
+                    "set" : 0,
+                    "index" : 0,
+                    "enable" : 1,
+                    "abs" : 1,
+                    "qp" : 20,
+                    "left" : 32,
+                    "top" : 32,
+                    "w" : 640,
+                    "h" : 480
+                },
+                {
+                    "set" : 0,
+                    "index" : 1,
+                    "enable" : 1,
+                    "abs" : 1,
+                    "qp" : 20,
+                    "left" : 640,
+                    "top" : 640,
+                    "w" : 640,
+                    "h" : 320
+                }
+            ],
+            "entropy":
+            {
+                "set" : 0,
+                "mode_i" : 1,
+                "mode_p" : 1
+            },
+            "ref":
+            {
+                "set" : 0,
+                "base" : 1,
+                "enhance" : 9,
+                "pred" : 0
+            },
+            "crop":
+            {
+                "set" : 0,
+                "enable" : 1,
+                "left" : 32,
+                "top" : 32,
+                "w" : 640,
+                "h" : 320
+            },
+            "slisplt":
+            {
+                "set" : 0,
+                "enable" : 1,
+                "row" : 16
+            },
+            "intra": [
+                {
+                    "set" : 0,
+                    "codec" : "h264",
+                    "16x16_en" : 1,
+                    "nxn_en" : 1,
+                    "cipf" : 1,
+                    "ipcm" : 1,
+                    "16x16p" : 0,
+                    "4x4p" : 0,
+                    "ipp" : 0
+                },
+                {
+                    "set" : 0,
+                    "codec" : "h265",
+                    "32x32_en" : 1,
+                    "16x16_en" : 1,
+                    "8x8_en" : 1,
+                    "cipf" : 1,
+                    "32x32p" : 0,
+                    "16x16p" : 0,
+                    "8x8p" : 0
+                }
+            ],
+            "inter": [
+                {
+                    "set" : 0,
+                    "codec" : "h264",
+                    "h-size" : 0,
+                    "v-size" : 0,
+                    "16x16_en" : 1,
+                    "16x8_en" : 1,
+                    "8x16_en" : 1,
+                    "8x8_en" : 1,
+                    "8x4_en" : 1,
+                    "4x8_en" : 1,
+                    "4x4_en" : 1,
+                    "ext_en" : 1
+                },
+                {
+                    "set" : 0,
+                    "codec" : "h265",
+                    "h-size" : 0,
+                    "v-size" : 0,
+                    "16x16_en" : 1,
+                    "16x8_en" : 1,
+                    "8x16_en" : 1,
+                    "8x8_en" : 1,
+                    "8x4_en" : 1,
+                    "4x8_en" : 1,
+                    "4x4_en" : 1,
+                    "32x32p" : 0,
+                    "16x16p" : 0,
+                    "8x8p" : 0,
+                    "ext_en" : 1
+                }
+            ],
+            "trans":
+            {
+                "set" : 0,
+                "intra-m" : 0,
+                "inter-m" : 0,
+                "cqio" : 0
+            },
+            "vui": [
+                {
+                    "set" : 0,
+                    "codec" : "h264",
+                    "asp-ratio-flg" : 0,
+                    "asp-ratio-idc" : 1,
+                    "ovrscn-if-flg" : 0,
+                    "ovrscn-ap-flg" : 0,
+                    "sar-w": 1,
+                    "sar-h": 1,
+                    "time-info-flg" : 1,
+                    "fix-frm-flg" : 1,
+                    "num-uts-in-tk" : 1,
+                    "time-scl" : 60,
+                    "v-sig-flg" : 1,
+                    "v-formt" : 5,
+                    "v-ful-rng-flg" : 1,
+                    "clor-desp-flg" : 1,
+                    "clor-prim" : 1,
+                    "tra-chartic" : 1,
+                    "mtx-coff" : 1
+                },
+                {
+                    "set" : 0,
+                    "codec" : "h265",
+                    "asp-ratio-flg" : 0,
+                    "asp-ratio-idc" : 1,
+                    "ovrscn-if-flg" : 0,
+                    "ovrscn-ap-flg" : 0,
+                    "sar-w": 1,
+                    "sar-h": 1,
+                    "time-info-flg" : 1,
+                    "num-uts-in-tk" : 1,
+                    "time-scl" : 60,
+                    "v-sig-flg" : 1,
+                    "v-formt" : 5,
+                    "v-ful-rng-flg" : 1,
+                    "clor-desp-flg" : 1,
+                    "clor-prim" : 1,
+                    "tra-chartic" : 1,
+                    "mtx-coff" : 1
+                }
+            ],
+            "dblk": [
+                {
+                    "set" : 0,
+                    "codec" : "h264",
+                    "dis-dblk-flt" : 1,
+                    "sli-apha-coff" : 0,
+                    "sli-beta-off" : 0
+                },
+                {
+                    "set" : 0,
+                    "codec" : "h265",
+                    "dis-dblk-flt" : 1,
+                    "sli-tc-off" : 0,
+                    "sli-beta-off" : 0
+                }
+            ]
+        }
+    ]
+}

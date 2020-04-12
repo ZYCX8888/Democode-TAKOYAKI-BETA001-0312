@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SmartBD_CFG>
+  <MachineInfo>
+    <DeviceID>01010102</DeviceID>
+  </MachineInfo>
+  <DeviceDescription MainID="1" SubID="0" DeviceType="3">
+    <LocalID>01010101</LocalID>
+    <IPaddr>172.19.24.238</IPaddr>
+    <Telphone>13912345678</Telphone>
+  </DeviceDescription>
+  <DeviceDescription MainID="2" SubID="0" DeviceType="3">
+    <LocalID>01010102</LocalID>
+    <IPaddr>172.19.24.233</IPaddr>
+    <Telphone>13812345678</Telphone>
+  </DeviceDescription>
+</SmartBD_CFG>

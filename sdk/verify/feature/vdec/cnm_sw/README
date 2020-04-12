@@ -1,0 +1,35 @@
+1.env
+export CROSS_COMPILE=arm-linux-gnueabihf- 
+export ARCH=arm 
+
+
+2.build vpu.ko
+cd vdi/linux/driver/
+make clean
+make
+
+
+3.build demo
+a.single demo
+make -f Wave5xxDecV2.mak clean
+make -f Wave5xxDecV2.mak
+arm-linux-gnueabihf-strip --strip-unneeded w5_dec_test
+b.multi demo
+make -f Wave5xxMultiV2.mak clean
+make -f Wave5xxMultiV2.mak SINGLE_THREAD=1
+or make -f Wave5xxMultiV2.mak
+arm-linux-gnueabihf-strip --strip-unneeded multi_instance_test
+
+
+4.run on target board
+a.copy demo_cnm.sh to demo.sh of board
+b.reboot, enter uboot console
+setenv bootargs console=ttyS0,115200 root=/dev/mtdblock2 rootfstype=squashfs ro init=/linuxrc LX_MEM=0x7400000 mma_heap=mma_heap_name0,miu=0,sz=0x5000000 mma_memblock_remove=1
+saveenv
+reset
+c.run load.sh to insmod vpu.ko, you have to make sure that the current dir has chagall.bin which can be got from project/board/i2m/vdec_fw
+d.run demo
+***single demo
+./w5_dec_test -c 0 --codec=12 --inplace=1 --vrange=48 -n 100 --input=./xxx.stream
+***multi demo
+./multi_instance_test  --multicmd=32_instances.cmd

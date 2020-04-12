@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SmartDevInfo_CFG>
+  <SpeakerVolume VolumeValue="70" Mute="0">
+  </SpeakerVolume>
+  <MicVolume VolumeValue="10" Mute="0">
+  </MicVolume>
+  <LastPlayFile Path="/customer/hscrollview.rc">
+  </LastPlayFile>
+</SmartDevInfo_CFG>

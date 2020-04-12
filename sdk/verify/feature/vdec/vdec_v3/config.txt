@@ -1,0 +1,49 @@
+############################################################
+## VdecChn     :通道号(0~15)
+## Type        :解码类型 h264/H264 h265/H265 
+## Width       :通道宽
+## Height      :通道高
+## VideoMode   :送帧模式(按流 or 按帧)
+## u32BufSize  :码流buffer大小 
+## InplaceMode :buffer模式
+## maxRefNum   :最大参考帧数目
+## FrmRate     :送流的帧率
+## ScaleW      :缩放宽
+## ScaleH      :缩放高
+## Path        :码流文件路径
+############################################################
+
+//	bDisableLowLatency,
+INITPARAM= 0,
+
+//case 1
+//	VdecChn, Type, Width, Height, VideoMode, u32BufSize, InplaceMode, maxRefNum, FrmRate, ScaleW, ScaleH,                          Path,
+VDEC=	  0, h264,   176,    144,     frame,    1048576,           1,         1,      30,       ,       , /tmp/h264_176_144_refnum_1.es,
+//VDEC=	1-2, h265,  1920,   1080,     frame,    1048576,           1,         1,      30,       ,       , /tmp/h264_176_144_refnum_1.es,
+	
+//case 2
+//1x1080p	
+//VDEC=     0, h264,   1920,    1080,     frame,    1048576,           1,         1,      30,       ,       , /tmp/h264_1920_1080_refnum_1.es,
+
+//case 3	
+//2x1080p	
+//VDEC=   0-1, h264,   1920,    1080,     frame,    1048576,           1,         1,      30,       ,       , /tmp/h264_1920_1080_refnum_1.es,
+
+//case 4	
+//4x1080p	
+//VDEC=   0-3, h264,   1920,    1080,     frame,    1048576,           1,         1,      30,       ,       , /tmp/h264_1920_1080_refnum_1.es,
+
+//case 5
+//1x4k	
+//VDEC=   0, h264,  3840,   2160,     frame,    1048576,           1,         1,      30,       ,       , /tmp/h264_3840_2160_refnum_1.es,
+
+//case 6
+//1x4k + 1x1080p 
+//VDEC=   0, h264,  3840,   2160,     frame,    1048576,           1,         1,      30,       ,       , /tmp/h264_3840_2160_refnum_1.es,
+//VDEC=	  1, h264,  1920,   1080,     frame,    1048576,           1,         1,      30,       ,       , /tmp/h264_1920_1080_refnum_1.es,
+
+	
+	
+	
+	
+	

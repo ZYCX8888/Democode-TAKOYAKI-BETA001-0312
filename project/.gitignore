@@ -1,0 +1,6 @@
+*.swp
+*.swn
+release/include
+tools/apitool
+tools/calibration_tool
+configs/current.configs

@@ -1,0 +1,6 @@
+# <- this is for comment / total file size must be less than 4KB
+setenv bootargs console=ttyS0,115200 ubi.mtd=UBI,2048 root=ubi:rootfs rw rootfstype=ubifs init=/linuxrc rootwait=1 LX_MEM=0x7f00000 mma_heap=mma_heap_name0,miu=0,sz=0x3800000 mma_memblock_remove=1 $(mtdparts)
+setenv bootcmd 'dcache on; mw 1f001cc0 11; gpio out 8 0; nand read.e 0x22000000 KERNEL 0x500000; gpio out 8 1; bootm 0x22000000;nand read.e 0x22000000 RECOVERY 0x500000; bootm 0x22000000
+saveenv
+reset
+% <- this is end of file symbol

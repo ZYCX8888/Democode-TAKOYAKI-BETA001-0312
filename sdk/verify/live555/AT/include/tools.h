@@ -1,0 +1,2 @@
+TOOL(setprop)
+TOOL(getprop)

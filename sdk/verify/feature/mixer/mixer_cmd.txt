@@ -1,0 +1,31 @@
+目前display使用的yuv422 ,因为mst420有问题
+display vga也有问题
+
+720P UP 
+1080P DOWN 
+
+-v 5 -t    for debug log
+
+mode              path
+4_D1    5         vif           B   H(dump)
+4_960H  6         vif-vpe       C   I(dump)
+2_720P  7         vif-vpe-disp  D 
+1_1080P 8         vif-divp-disp E 
+1_400M  9         vif-vpe-venc  F   J(dump)
+
+
+framerate
+full   3
+1/2    4
+1/4    5
+1/8    6
+3/4    7
+
+
+
+四路1080 ./prog -d 8888 -p DD000000DD000000DD000000DD000000
+	 ./prog -d 0008 -p 000000000000000000000000DD000000
+八路720P ./prog -d 7777 -p DD00DD00DD00DD00DD00DD00DD00DD00
+一路1080 ./prog -d 8 -p DD000000 -v 5 -t
+一路720P ./prog -d 0007 -p 000000000000000000000000DD00DD00 -v 5 -t
+一路720P ./prog -d 7 -p DD00DD00 -v 5 -t

@@ -1,0 +1,22 @@
+1)build:
+make
+
+2)clean:
+make clean
+
+3)usage:
+a.add_nalu_head_info
+It will add extra 16 byte header of indicating nalu size.
+/add_nalu_head_info input.es output_16byte_header.es
+
+b.del_nalu_head_info
+It will delete extra 16 byte header before nalu.
+/del_nalu_head_info input.es output_remove_16byte_header.es
+
+c.es_mess
+It will flip random bit of random byte.
+h264:
+./es_mess -c h264 -i input.h264 -o output_mess.h264
+
+h265:
+./es_mess -c h265 -i input.h265 -o output_mess.h265
