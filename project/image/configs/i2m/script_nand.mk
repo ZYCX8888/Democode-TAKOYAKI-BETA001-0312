@@ -130,7 +130,7 @@ ubi_$(FLASH_TYPE)_partition_script:
 ubi_$(FLASH_TYPE)_config_script:
 	@echo "# <- this is for comment / total file size must be less than 4KB" > $(SCRIPTDIR)/set_config
 	@echo setenv bootargs  $(rootfs$(BOOTENV)) $(kernel$(BOOTENV)) $(EXBOOTARGS) \$$\(mtdparts\) >> $(SCRIPTDIR)/set_config
-	@echo setenv bootcmd \'dcache on\; $(wifi24mclkcmd)\; $(wifirstoffcmd)\; nand read.e $(KERNELBOOTADDR) KERNEL $(kernel$(PATSIZE))\;$(rootfs$(BOOTCMD)) $(wifirstoncmd)\; bootm $(KERNELBOOTADDR)\;nand read.e $(KERNELBOOTADDR) RECOVERY $(kernel$(PATSIZE))\; bootm $(KERNELBOOTADDR) >> $(SCRIPTDIR)/set_config
+	@echo setenv bootcmd \'dcache off\;bootlogo\;dcache on\; $(wifi24mclkcmd)\; $(wifirstoffcmd)\; nand read.e $(KERNELBOOTADDR) KERNEL $(kernel$(PATSIZE))\;$(rootfs$(BOOTCMD)) $(wifirstoncmd)\; bootm $(KERNELBOOTADDR)\;nand read.e $(KERNELBOOTADDR) RECOVERY $(kernel$(PATSIZE))\; bootm $(KERNELBOOTADDR) >> $(SCRIPTDIR)/set_config
 	@echo saveenv >> $(SCRIPTDIR)/set_config
 	@echo reset >> $(SCRIPTDIR)/set_config
 	@echo "% <- this is end of file symbol" >> $(SCRIPTDIR)/set_config

@@ -10,6 +10,7 @@ estar scripts/[[ipl.es
  estar scripts/[[miservice.es
  estar scripts/[[customer.es
  estar scripts/[[appconfigs.es
+ estar scripts/[[logo.es
 
 estar scripts/set_config
 saveenv

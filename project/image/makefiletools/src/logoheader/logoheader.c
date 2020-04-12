@@ -1,3 +1,7 @@
+
+//#define __ARM_PCS_VFP
+typedef unsigned long ulong;
+
 #include <stdio.h>
 #include <fcntl.h>  //open
 #include <unistd.h> //getopt
@@ -16,6 +20,7 @@ typedef unsigned long long u64;
 #include "SAT070BO30I21Y0_1024x600_MIPI.h"
 #include "LX50FWB4001_RM68172_480x854_v2.h"
 #include "T30P133_480x854.h"
+#include "L035_320x240.h"
 
 #define DISP_DEVICE_NULL     0
 #define DISP_DEVICE_HDMI     1
@@ -160,13 +165,19 @@ int main(int argc, char *argv[]) {
         memcpy(&logo_header.stMipiDsiCfg, &stMipiDsiConfig_T30P133, sizeof(MhalPnlMipiDsiConfig_t));
 		logo_header.padding[0] = DISP_DEVICE_LCD;
 	}
+    else if(!strcmp(logo_header.panelname, "L035_320x240"))
+	{
+		printf("null mipi cfg\n");
+		memcpy(&logo_header.stPnlPara, &stPanel_L035_320x240, sizeof(MhalPnlParamConfig_t));
+        memcpy(&logo_header.stMipiDsiCfg, &stMipiDsiConfig_L035_320x240, sizeof(MhalPnlMipiDsiConfig_t));
+		logo_header.padding[0] = DISP_DEVICE_LCD;
+	}
     else if(!strcmp(logo_header.panelname, "SAT070BO30I21Y0"))
 	{
 		printf("null mipi cfg\n");
-		memcpy(&logo_header.stPnlPara, &stPanel_SAT070BO30I21Y0_1024x60, sizeof(MhalPnlParamConfig_t));
-        memcpy(&logo_header.stMipiDsiCfg, &stMipiDsiConfig_SAT070BO30I21Y0_1024x600, sizeof(MhalPnlMipiDsiConfig_t));
+		memcpy(&logo_header.stPnlPara, &stPanel_ADT07016BR50_1024x600, sizeof(MhalPnlParamConfig_t));
 		logo_header.padding[0] = DISP_DEVICE_LCD;
-	}
+	}	
 	else
 	{
 		logo_header.padding[0] = DISP_DEVICE_HDMI;

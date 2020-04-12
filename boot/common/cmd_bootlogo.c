@@ -43,6 +43,16 @@
 #include "mhal_rgn_datatype.h"
 #include "mhal_rgn.h"
 #endif
+
+//#include <common.h>
+//#include <command.h>
+//#include <MsDebug.h>
+//#include <MsSysUtility.h>
+//#include "../drivers/mstar/gpio/drvGPIO.h"
+//#include "../arch/arm/include/asm/arch-infinity/mach/io.h"
+//#include "../arch/arm/include/asm/arch-infinity/mach/platform.h"
+
+
 //-------------------------------------------------------------------------------------------------
 //  Defines & Macro
 //-------------------------------------------------------------------------------------------------
@@ -1689,6 +1699,264 @@ void _BootLogoRgnCtrl(BootlogoImgConfig_t *pstBootLogoImgCfg, u16 u16ImgWidth, u
 #endif
 }
 
+#define pnl_spi_en      1
+
+#if pnl_spi_en
+
+#define SPI_CS_GPIO      8
+#define SPI_SCL_GPIO     9
+#define SPI_SDO_GPIO     10
+#define SPI_RESET_GPIO   1
+
+#define G_LED_GPIO       70
+#define R_LED_GPIO       69
+
+#define spimdelay(n) ({unsigned long msec=(n); while (msec--) udelay(1000);})
+
+void Gpio_Init(void)
+{
+  MDrv_GPIO_Pad_Set(SPI_CS_GPIO);
+  MDrv_GPIO_Pad_Set(SPI_SCL_GPIO);
+  MDrv_GPIO_Pad_Set(SPI_SDO_GPIO);
+  MDrv_GPIO_Pad_Set(SPI_RESET_GPIO);
+
+  MDrv_GPIO_Pad_Set(G_LED_GPIO);
+  MDrv_GPIO_Pad_Set(R_LED_GPIO);
+}
+
+void SetGpio(unsigned int gpio, u8 value )
+{
+	if(value)
+	  mdrv_gpio_set_high(gpio);
+	else
+	  mdrv_gpio_set_low(gpio);	
+	udelay(1);
+}
+
+#define hw_ClrSPI_CS()   SetGpio(SPI_CS_GPIO,0)
+#define hw_SetSPI_CS()   SetGpio(SPI_CS_GPIO,1)
+
+#define hw_ClrSPI_SCL()  SetGpio(SPI_SCL_GPIO,1)
+#define hw_SetSPI_SCL()  SetGpio(SPI_SCL_GPIO,0) 
+
+#define hw_SetSPI_SDA()  SetGpio(SPI_SDO_GPIO,1)
+#define hw_ClrSPI_SDA()  SetGpio(SPI_SDO_GPIO,0) 
+
+#define hw_SetSPI_RES()  SetGpio(SPI_RESET_GPIO,1)
+#define hw_ClrSPI_RES()  SetGpio(SPI_RESET_GPIO,0) 
+
+#define Set_R_LED_ON()   SetGpio(R_LED_GPIO,1)
+#define Set_R_LED_OFF()  SetGpio(R_LED_GPIO,0)
+
+#define Set_G_LED_ON()   SetGpio(G_LED_GPIO,1)
+#define Set_G_LED_OFF()  SetGpio(G_LED_GPIO,0)
+
+
+#define Delay_n   3  //10 --30k
+void SPI_SendData(unsigned char i)
+{  
+   unsigned char n;
+   
+   for(n=0; n<8; n++)			
+   {  
+	  if(i&0x80) hw_SetSPI_SDA();
+      	else hw_ClrSPI_SDA();
+
+      i<<= 1;
+
+	  hw_ClrSPI_SCL();
+      hw_SetSPI_SCL();
+   }
+}
+void SPI_WriteComm(unsigned char i)
+{
+    hw_ClrSPI_CS(); 
+
+    hw_ClrSPI_SDA();  
+
+	hw_ClrSPI_SCL();
+	hw_SetSPI_SCL();
+
+	SPI_SendData(i);
+
+    hw_SetSPI_CS(); 
+}
+void SPI_WriteData(unsigned char i)
+{
+    hw_ClrSPI_CS();
+	
+    hw_SetSPI_SDA();
+	
+	hw_ClrSPI_SCL();	
+	hw_SetSPI_SCL();
+
+	SPI_SendData(i);
+	
+    hw_SetSPI_CS();
+}
+
+void PanelSPIInit(void)
+{
+	printf("7789_2.0_SPHX_PanelSPI Initial!\n");
+	Gpio_Init();
+	hw_ClrSPI_CS();
+
+	hw_SetSPI_RES();
+	spimdelay( 200 ); 
+	hw_ClrSPI_RES();
+	spimdelay( 200 );
+	hw_SetSPI_RES();
+	spimdelay( 200 );
+
+	SPI_WriteComm(0x11);
+	spimdelay( 3 );
+
+	//MApp_SetDesignImageMirror_SPI();
+	
+	SPI_WriteComm(0x3a);
+	SPI_WriteData(0x66);
+
+#if 0
+	SPI_WriteComm(0xB2);	   //Porch Setting
+	SPI_WriteData(0x0C);   //Normal BP
+	SPI_WriteData(0x0C);   //Normal FP
+	SPI_WriteData(0x00);   //Enable Seperate
+	SPI_WriteData(0x33);   //idle, BP[7:4], FP[3:0]
+	SPI_WriteData(0x33);   //partial, BP[7:4], FP[3:0]
+#endif
+
+	
+	SPI_WriteComm(0xB7);	   //Gate Control
+	SPI_WriteData(0x34);		//44
+
+	SPI_WriteComm(0x13);
+	
+	SPI_WriteComm(0xBB);	   //VCOMS Setting
+	SPI_WriteData(0x15);	//0x17 0x1A  0x24 0x2A 0x34 0x3f
+	
+	SPI_WriteComm(0xC0);	   
+	SPI_WriteData(0x2C);   
+	
+	SPI_WriteComm(0xC2);	   
+	SPI_WriteData(0x01);   
+	
+	SPI_WriteComm(0xC3);	   //VRH Set
+	SPI_WriteData(0x21);   
+	
+	SPI_WriteComm(0xC4);	   
+	SPI_WriteData(0x20); 
+	
+	SPI_WriteComm(0xC5);	   
+	SPI_WriteData(0x3F); 
+	
+	SPI_WriteComm(0xC6);	   //Frame Rate Control in Normal Mode
+	SPI_WriteData(0x00);	//0x0f	
+	
+	SPI_WriteComm(0xD0);	   //Power Control 1
+	SPI_WriteData(0xA4);   //
+	SPI_WriteData(0xA1);   //0xA1 AVDD=6.8V, AVCL=-4.8V, VDS=2.3V
+	
+	SPI_WriteComm(0xE0);	   
+	SPI_WriteData(0xD0);   
+	SPI_WriteData(0x06);   
+	SPI_WriteData(0x0C);   
+	SPI_WriteData(0x0E);   
+	SPI_WriteData(0x14);   
+	SPI_WriteData(0x0B);   
+	SPI_WriteData(0x41);   
+	SPI_WriteData(0x3A);   
+	SPI_WriteData(0x52);   
+	SPI_WriteData(0x3B);   
+	SPI_WriteData(0x16);   
+	SPI_WriteData(0x0A);   
+	SPI_WriteData(0x21);   
+	SPI_WriteData(0x26);   
+	
+	SPI_WriteComm(0xE1);	   
+	SPI_WriteData(0xD0);   
+	SPI_WriteData(0x06);   
+	SPI_WriteData(0x0E);   
+	SPI_WriteData(0x0D);   
+	SPI_WriteData(0x15);   
+	SPI_WriteData(0x0C);   
+	SPI_WriteData(0x43);   
+	SPI_WriteData(0x5F);   
+	SPI_WriteData(0x52);   
+	SPI_WriteData(0x3B);   
+	SPI_WriteData(0x16);   
+	SPI_WriteData(0x0B);   
+	SPI_WriteData(0x24);   
+	SPI_WriteData(0x26);   
+
+#if 0
+
+	SPI_WriteComm(0x36);
+	SPI_WriteData(0xc4); //0x70  0x78  0xb0: mirror  
+
+	SPI_WriteComm(0x2A);	   
+	SPI_WriteData(0x00);   
+	SPI_WriteData(0x00);   
+	SPI_WriteData(0x01);   
+	SPI_WriteData(0x3F);   
+
+	SPI_WriteComm(0x2B);	   
+	SPI_WriteData(0x00);   
+	SPI_WriteData(0x00);   
+	SPI_WriteData(0x00);   
+	SPI_WriteData(0xef);   
+
+#else
+   	SPI_WriteComm(0x36);
+	SPI_WriteData(0xe4); //0x70  0x78  0xb0: mirror  
+
+	SPI_WriteComm(0x2A);	   
+	SPI_WriteData(0x00);   
+	SPI_WriteData(0x00);   
+	SPI_WriteData(0x00);   
+	SPI_WriteData(0xEF);   
+
+	SPI_WriteComm(0x2B);	   
+	SPI_WriteData(0x00);   
+	SPI_WriteData(0x00);   
+	SPI_WriteData(0x01);   //0x01
+	SPI_WriteData(0x3F);   //0x3F 
+#endif
+	
+	//SPI_WriteComm(0x29);
+		
+	SPI_WriteComm(0xB0);	   
+	SPI_WriteData(0x11);   
+	//SPI_WriteData(0xF4); 
+#if 0
+	SPI_WriteComm(0xB1);	   
+	SPI_WriteData(0x69);   
+	SPI_WriteData(0x02);   
+	SPI_WriteData(0x14);   
+#endif	
+#if 0//ENABLE_DISP_TYPE==ENABLE_DISP_NORMAL_90//����
+	SPI_WriteComm(0xB1);	   
+	SPI_WriteData(0x40);  //0xEE  
+	SPI_WriteData(0x5b);  //0x02 
+	SPI_WriteData(0x08);  //0x14
+#endif
+	
+	spimdelay( 5 );
+#if 0
+	SPI_WriteComm(0xB3); //Frame Rate Control 1
+	SPI_WriteData(0x00);  //  
+	SPI_WriteData(0x00);  //0xEE  
+	SPI_WriteData(0x00);  //0xEE  
+#endif
+	
+	SPI_WriteComm(0x29);	   //Display ON 
+	//SPI_WriteComm(0x2C);	
+
+}
+
+
+#endif
+
+
 int do_display (cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
     #define BUFFERSIZE (720*480*3)
@@ -1704,6 +1972,10 @@ int do_display (cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 
     BOOTLOGO_DBG(BOOTLOGO_DBG_LEVEL_INFO,"%s %d, argc =%d\n", __FUNCTION__, __LINE__, argc);
 
+  #if pnl_spi_en
+    Set_R_LED_ON();
+    PanelSPIInit();
+  #endif 	
     memset(&stBootlogoImgCfg, 0, sizeof(BootlogoImgConfig_t));
     if(argc == 1)
     {
@@ -1761,7 +2033,6 @@ int do_display (cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
         stBootlogoImgCfg.u8Interface      = simple_strtoul(argv[4], NULL, 10);
 
         bParamSet = 1;
-
         if(stBootlogoImgCfg.u8Interface == 4 && argc == 6)
         {
         #if PNL_TEST_MD_EN
@@ -1825,5 +2096,77 @@ U_BOOT_CMD(
 	"show bootlogo",
 	NULL
 );
+
+
+#if pnl_spi_en
+void pnl_spi(int cmd,int len,unsigned char*spidata)
+{
+   int i=0;
+    
+   SPI_WriteComm(cmd);
+   printf("spi cmd (%x)\n", cmd);
+   
+   {
+      for(i=0;i<len;i++)
+      {
+        SPI_WriteData(*spidata);
+		printf("spi data (%x)\n", *spidata);
+		spidata++;
+      }
+   }
+}
+
+int do_pnlspi( cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+{
+	int j;
+	int tmp;
+    int cmd;
+    int datalen;
+	char  *cp = 0;
+	uchar dout[5];
+
+    if(4 !=argc )
+    {
+        printf("argc=%d\n",argc);
+        cmd_usage(cmdtp);
+        return -1;
+    }
+
+	cmd     = simple_strtoul(argv[1], NULL, 10);	
+	datalen = simple_strtoul(argv[2], NULL, 10);
+	
+    {
+		cp = argv[3];
+		for(j = 0; *cp; j++, cp++) 
+		{
+			tmp = *cp - '0';
+			if(tmp > 9)
+				tmp -= ('A' - '0') - 10;
+			if(tmp > 15)
+				tmp -= ('a' - 'A');
+			if(tmp > 15) {
+				printf("Hex conversion error on %c\n", *cp);
+				return 1;
+			}
+			if((j % 2) == 0)
+				dout[j / 2] = (tmp << 4);
+			else
+				dout[j / 2] |= tmp;
+		}
+	}
+    pnl_spi(cmd,datalen,dout);
+   
+    return 0;
+}
+
+
+U_BOOT_CMD(
+    pnlspi, 4, 0, do_pnlspi,
+    "Config pnl spi",
+    "(for 2nd parameter, you must type at least 3 characters)\n"
+    "pnlspi 11 2 3132    : ex: spi cmd 11 data 31 32\n"
+    );
+
+#endif  //#ifdef CONFIG_MS_GPIO
 
 
